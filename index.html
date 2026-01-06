@@ -16,12 +16,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
     canvas {
       position: absolute;
     }
     video {
-      transform: scaleX(-1); /* 镜像，符合直觉 */
+      transform: scaleX(-1);
+    }
+    #gameCanvas {
+      position: relative;
+      z-index: 1;
     }
   </style>
 </head>
@@ -29,7 +34,9 @@
 <body>
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
+  <canvas id="gameCanvas" width="300" height="600"></canvas>
 
   <script src="./hand.js"></script>
+  <script src="./game.js"></script>
 </body>
-</html>
+</html>  
