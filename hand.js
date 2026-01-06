@@ -22,7 +22,6 @@ hands.onResults((results) => {
 
   if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
     const landmarks = results.multiHandLandmarks[0];
-
     drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
       color: "#00FF00",
       lineWidth: 2,
@@ -59,24 +58,23 @@ function analyzeHand(landmarks) {
 
   // Left/right movement
   const dx = indexTip.x - wrist.x;
-
   if (dx > 0.15) {
-    console.log("👉 Move Right");
+    if (window.gameInput) window.gameInput("MOVE_RIGHT");
   } else if (dx < -0.15) {
-    console.log("👈 Move Left");
+    if (window.gameInput) window.gameInput("MOVE_LEFT");
   }
 
-  // Fist detection
+  // Fist detection (drop)
   const isFist =
-    landmarks[8].y > landmarks[6].y && landmarks[12].y > landmarks[10].y;
-
+    landmarks[8].y > landmarks[6].y &&
+    landmarks[12].y > landmarks[10].y;
   if (isFist) {
-    console.log("✊ Drop");
+    if (window.gameInput) window.gameInput("DROP");
   }
 
-  // Palm rotation
+  // Palm rotation (rotate)
   const palmAngle = landmarks[5].x - landmarks[17].x;
   if (palmAngle > 0.1) {
-    console.log("🔄 Rotate Right");
+    if (window.gameInput) window.gameInput("ROTATE");
   }
 }
